@@ -8,31 +8,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Create .env file
-      run: echo "YOUR_ENV_VARIABLES" > .env
-
-    - name: Deploy to EC2
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-      run: |
-        ssh -i $SSH_PRIVATE_KEY $USERNAME@$HOST 'bash -s' <<'ENDSSH'
-          cd /nodeapp
-          git pull origin main
-          npm install
-          pm2 restart all
-        ENDSSH
+      - name: Deploy to EC2
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: "-avzr --delete"
+          remote_path: "/nodeapp"
+          server: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_port: "22" # or your SSH port
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
