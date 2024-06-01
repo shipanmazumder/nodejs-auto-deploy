@@ -21,6 +21,11 @@ jobs:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           HOSTNAME: ${{ secrets.HOST }}
           USER_NAME: ${{ secrets.USERNAME }}
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
 
       - name: Build & Deploy
         run: |
@@ -31,5 +36,5 @@ jobs:
               git fetch --all &&
               git reset --hard origin/main &&
               git pull origin main &&
-              sudo npm i &&
+              sudo npm i
           '
