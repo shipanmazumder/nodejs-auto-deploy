@@ -32,10 +32,9 @@ jobs:
         run: |
           echo "Show FIle"
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
-          echo "${{ github.HOST }}"
+          echo "${{ vars.HOST }}"
           echo "${{ secrets.USERNAME }}"
           ls -la
-          cat  private_key
       - name: Add exception for dubious ownership
         run: |
           git config --global --add safe.directory /var/www/nodeapp
@@ -43,8 +42,7 @@ jobs:
       - name: Build & Deploy
         run: |
           ls -la
-          cat  private_key
-          ssh -o StrictHostKeyChecking=no -i private_key "${{ secrets.USERNAME }}"@" ${{ github.HOST }}"'
+          ssh -o StrictHostKeyChecking=no -i private_key "${{ secrets.USERNAME }}"@" ${{ vars.HOST }}"'
             cd /var/www/nodeapp &&
             sudo  git checkout main &&
             sudo git reset --hard origin/main &&
