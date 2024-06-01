@@ -11,6 +11,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2 
+
       - name: Debug Information
         run: |
           pwd
@@ -25,12 +26,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '20' # or any other valid Node.js version
+
+      - name: Show Private Key
+        run: |
+          echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+          cat private_key.pem
 
       - name: Build & Deploy
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
-          echo "$PRIVATE_KEY"
           ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/nodeapp &&
             git checkout main &&
