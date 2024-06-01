@@ -30,12 +30,12 @@ jobs:
       - name: Build & Deploy
         run: |
           echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
-          cat private_key.pem
+          echo "$PRIVATE_KEY"
           ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/nodeapp &&
             git checkout main &&
             git fetch --all &&
             git reset --hard origin/main &&
-            git pull origin dev &&
+            git pull origin main &&
             sudo npm i
           '
