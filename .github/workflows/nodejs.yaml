@@ -11,16 +11,21 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2 
-      - name: Build & Deploy
+      - name: Debug Information
+        run: |
+          pwd
+          ls -la
+          git status
+          git remote -v
         env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{ secrets.HOST }}
-            USER_NAME: ${{ secrets.USERNAME }}
-      
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.HOST }}
+          USER_NAME: ${{ secrets.USERNAME }}
+
+      - name: Build & Deploy
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-              # Now we have got the access of EC2 and we will start the deploy.
               cd /home/ubuntu/nodeapp &&
               git checkout main &&
               git fetch --all &&
