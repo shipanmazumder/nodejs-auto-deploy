@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "node js auto server deploy",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipanmazumder/nodejs-auto-deploy.git"
+  },
+  "author": "Shipan Mazumder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shipanmazumder/nodejs-auto-deploy/issues"
+  },
+  "homepage": "https://github.com/shipanmazumder/nodejs-auto-deploy#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
