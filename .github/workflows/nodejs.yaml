@@ -36,14 +36,14 @@ jobs:
           cat  private_key
       - name: Add exception for dubious ownership
         run: |
-          git config --global --add safe.directory /home/ubuntu/nodeapp
+          git config --global --add safe.directory /var/www/nodeapp
 
       - name: Build & Deploy
         run: |
           ls -la
           cat  private_key
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-3-90-207-133.compute-1.amazonaws.com '
-            cd /home/ubuntu/nodeapp &&
+            cd /var/www/nodeapp &&
             git checkout main &&
             git fetch --all &&
             git reset --hard origin/main &&
