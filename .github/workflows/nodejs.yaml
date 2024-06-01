@@ -31,7 +31,7 @@ jobs:
       - name: Show Private Key
         run: |
           echo "Show FIle"
-          echo ${{secrets.SSH_PRIVATE_KEY}} > private_key && chmod 600 private_key
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > private_key && chmod 600 private_key
           ls -la
           cat  private_key
 
