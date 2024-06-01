@@ -44,8 +44,8 @@ jobs:
           cat  private_key
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-3-90-207-133.compute-1.amazonaws.com '
             cd /var/www/nodeapp &&
-            sudo -u www-data git checkout main &&
-            sudo -u www-data git fetch --all &&
-            sudo -u www-data git pull origin main &&
+            sudo  git checkout main &&
+            sudo  git fetch --all &&
+            sudo  git pull origin main &&
             sudo npm i
           '
