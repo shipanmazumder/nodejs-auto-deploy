@@ -26,17 +26,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # or any other valid Node.js version
+          node-version: '20' # or any other valid Node.js version
 
       - name: Show Private Key
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+          echo "Show FIle"
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ls -la
-          cat private_key.pem
+          echo  "$PRIVATE_KEY"
 
       - name: Build & Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/nodeapp &&
             git checkout main &&
             git fetch --all &&
