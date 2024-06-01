@@ -26,11 +26,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20' # or any other valid Node.js version
+          node-version: '14' # or any other valid Node.js version
 
       - name: Show Private Key
         run: |
           echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+          ls -la
           cat private_key.pem
 
       - name: Build & Deploy
