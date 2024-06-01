@@ -28,7 +28,7 @@ jobs:
         with:
           switches: "-avzr --delete"
           remote_path: "/nodeapp"
-          server: "3.90.207.133"
+          server: "ec2-3-90-207-133.compute-1.amazonaws.com"
           remote_user: "ubuntu"
           remote_port: "22" # or your SSH port
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
