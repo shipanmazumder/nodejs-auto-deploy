@@ -1,38 +1,33 @@
-name: Deploy to EC2
+name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  deploy:
+  Deploy:
+    name: Deploy to EC2
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v2 
+      - name: Build & Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            HOSTNAME: ${{secrets.HOST}}
+            USER_NAME: ${{secrets.USERNAME}}
+      
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Create .env file
-      run: echo "YOUR_ENV_VARIABLES" > .env
-
-    - name: Deploy to EC2
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        HOST: "ec2-3-90-207-133.compute-1.amazonaws.com"
-        USERNAME: "ubuntu"
-      run: |
-        ssh -i $SSH_PRIVATE_KEY $USERNAME@$HOST 'bash -s' <<'ENDSSH'
-          cd /nodeapp
-          git pull origin main
-          npm install
-          pm2 restart all
-        ENDSSH
+              # Now we have got the access of EC2 and we will start the deploy .
+              cd /home/ubuntu/nodeapp &&
+              git checkout main &&
+              git fetch --all &&
+              git reset --hard origin/dev &&
+              git pull origin dev &&
+              sudo npm i &&
+              sudo npm run build &&
+              sudo pm2 stop ./dist/index.js &&
+              sudo pm2 start ./dist/index.js
