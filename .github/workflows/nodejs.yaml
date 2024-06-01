@@ -42,7 +42,7 @@ jobs:
       - name: Build & Deploy
         run: |
           ls -la
-          ssh -o StrictHostKeyChecking=no -i private_key "${{ secrets.USERNAME }}"@" ${{ vars.HOST }}"'
+          ssh -o StrictHostKeyChecking=no -i private_key "${{ secrets.USERNAME }}"@"${{ vars.HOST }}"'
             cd /var/www/nodeapp &&
             sudo  git checkout main &&
             sudo git reset --hard origin/main &&
