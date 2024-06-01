@@ -33,7 +33,7 @@ jobs:
           echo "Show FIle"
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ls -la
-          echo  "$PRIVATE_KEY"
+          echo  "${{secrets.SSH_PRIVATE_KEY}}"
 
       - name: Build & Deploy
         run: |
