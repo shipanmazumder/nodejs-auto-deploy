@@ -48,5 +48,5 @@ jobs:
             sudo  git fetch --all &&
             sudo  git pull origin main &&
             sudo npm i
-            pm2 restart all
+            sudo pm2 restart all
           '
