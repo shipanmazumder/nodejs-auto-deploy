@@ -34,6 +34,9 @@ jobs:
           echo "${{secrets.SSH_PRIVATE_KEY}}" > private_key && chmod 600 private_key
           ls -la
           cat  private_key
+      - name: Add exception for dubious ownership
+        run: |
+          git config --global --add safe.directory /home/ubuntu/nodeapp
 
       - name: Build & Deploy
         run: |
